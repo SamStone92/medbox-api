@@ -59,6 +59,7 @@ exports.findAllInLocation = function(req, res) {
 
 
 exports.addUser = function(req, res) {
+    console.log("got this far")
   var newContact = req.body;
   newContact.createDate = new Date();
 
