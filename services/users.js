@@ -58,20 +58,21 @@ exports.findAllInLocation = function(req, res) {
 };
 
 
-exports.addService = function(req, res) {
-    var serviceObject = req.body;
-    console.log('Adding services: ' + JSON.stringify(serviceObject));
-    db.collection('services', function(err, collection) {
-        collection.insert(serviceObject, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                console.log(req.body);
-                res.send(result[0]);
-            }
-        });
-    });
+exports.addUser = function(req, res) {
+  var newContact = req.body;
+  newContact.createDate = new Date();
+
+  if (!(req.body.firstName || req.body.lastName)) {
+    handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
+  }
+
+  db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new contact.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
 }
 
 

@@ -40,4 +40,4 @@ function handleError(res, reason, message, code) {
 
 
 app.get('/services', users.findAllInLocation);
-app.post('/services', users.addService);
+app.post('/services', users.addUser);
