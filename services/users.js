@@ -65,12 +65,12 @@ exports.addUser = function(req, res) {
   newContact.createDate = new Date();
 
   if (!(req.body.firstName || req.body.lastName)) {
-    handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
+    console.log(err.message);
   }
 
   db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
+      console.log(err.message);
     } else {
       res.status(201).json(doc.ops[0]);
     }
