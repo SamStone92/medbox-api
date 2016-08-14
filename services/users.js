@@ -6,6 +6,7 @@ var mongooseDb = mongoose.connection;
 var Server = mongo.Server;
 var Db = mongo.Db;
 var BSON = mongo.BSONPure;
+var CONTACTS_COLLECTION = "contacts";
 
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 
@@ -59,7 +60,7 @@ exports.findAllInLocation = function(req, res) {
 
 
 exports.addUser = function(req, res) {
-    console.log("got this far")
+    console.log("got this far");
   var newContact = req.body;
   newContact.createDate = new Date();
 
