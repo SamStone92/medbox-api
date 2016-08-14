@@ -1,41 +1,35 @@
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/Moono');
-var mongooseDb = mongoose.connection;
+var express = require("express");
+var path = require("path");
+var bodyParser = require("body-parser");
+var mongodb = require("mongodb");
+var ObjectID = mongodb.ObjectID;
 
-var Server = mongo.Server;
-var Db = mongo.Db;
-var BSON = mongo.BSONPure;
 var CONTACTS_COLLECTION = "contacts";
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
+var app = express();
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json());
 
-connectToServicesDB();
-connectToAreasDB();
+// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
+var db;
 
-function connectToServicesDB(){
-    db = new Db('services', server);
-    db.open(function(err, db) {
-        if(!err) {
-            console.log("Connected to 'winedb' database");
-        }
-    });
-}
+// Connect to the database before starting the application server.
+mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  }
 
-function connectToAreasDB(){
-    areas = new Db('areas', server);
-    areas.open(function(err, db) {
-        if(!err) {
-            console.log("Connected to 'areas' database");
-        }
-    });
-}
+  // Save database object from the callback for reuse.
+  db = database;
+  console.log("Database connection ready");
 
-mongooseDb.on('error', console.error.bind(console, 'connection error:'));
-mongooseDb.once('open', function() {
-  console.log('woooorkded')
+  // Initialize the app.
+  var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
 });
-
 
 exports.findAllInLocation = function(req, res) {
 	var lat = parseInt(req.query.lat);
