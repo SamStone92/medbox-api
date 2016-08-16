@@ -8,7 +8,7 @@ var CONTACTS_COLLECTION = "users";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({ extended: false }));
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
