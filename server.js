@@ -65,8 +65,8 @@ app.post("/users", function(req, res) {
     });
 });
 
-app.get("/users/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+app.get("/users/:email", function(req, res) {
+  db.collection(CONTACTS_COLLECTION).findOne({ email: new ObjectID(req.params.email) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
