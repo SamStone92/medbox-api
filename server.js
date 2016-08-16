@@ -47,15 +47,20 @@ app.get("/users", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
-  var newContact = req.body;
-
-  db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
+  
+  var serviceObject = req.body;
+    console.log('Adding services: ' + JSON.stringify(serviceObject));
+    db.collection('users', function(err, collection) {
+        collection.insert(serviceObject, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                console.log(req.body);
+                res.send(result[0]);
+            }
+        });
+    });
 });
 
 app.get("/users/:id", function(req, res) {
