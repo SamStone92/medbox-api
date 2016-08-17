@@ -38,18 +38,6 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
-app.get("/users", function(req, res) {
-        console.log("nah it dis one");
-
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
 app.post("/users", function(req, res) {
   
   var serviceObject = req.body;
