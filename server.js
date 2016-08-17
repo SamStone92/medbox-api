@@ -56,8 +56,6 @@ app.post("/users", function(req, res) {
 });
 
 app.get("/users", function(req, res) {
-        console.log("yo it dis one");
-
   var email = req.query.email;
   db.collection(CONTACTS_COLLECTION).findOne({ email: email}, function(err, doc) {
     if (err) {
