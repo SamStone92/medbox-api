@@ -30,10 +30,6 @@ function connectToAreasDB(){
     });
 }
 
-mongooseDb.on('error', console.error.bind(console, 'connection error:'));
-mongooseDb.once('open', function() {
-  console.log('woooorkded')
-});
 
 
 exports.getUser = function(req, res) {
