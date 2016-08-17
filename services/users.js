@@ -14,7 +14,7 @@ connectToAreasDB();
 var CONTACTS_COLLECTION = "users";
 
 function connectToServicesDB(){
-    db = new Db('services', server);
+    db = new Db('users', server);
     db.open(function(err, db) {
         if(!err) {
             console.log("Connected to 'winedb' database");
@@ -22,14 +22,6 @@ function connectToServicesDB(){
     });
 }
 
-function connectToAreasDB(){
-    areas = new Db('areas', server);
-    areas.open(function(err, db) {
-        if(!err) {
-            console.log("Connected to 'areas' database");
-        }
-    });
-}
 
 
 
