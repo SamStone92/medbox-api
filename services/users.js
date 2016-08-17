@@ -2,6 +2,7 @@
 var express = require("express");
 var path = require("path");
 var mongodb = require("mongodb");
+var bodyParser = require('body-parser')
 
 var CONTACTS_COLLECTION = "contacts";
 
