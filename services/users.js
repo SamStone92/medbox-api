@@ -7,7 +7,7 @@ var Server = mongo.Server;
 var Db = mongo.Db;
 var BSON = mongo.BSONPure;
 
-var server = new Server('localhost', process.env.PORT || 8080, {auto_reconnect: true});
+var server = new Server('heroku_42v810c5', process.env.PORT || 8080, {auto_reconnect: true});
 
 connectToServicesDB();
 connectToAreasDB();
