@@ -66,7 +66,7 @@ app.post("/users", function(req, res) {
 });
 
 app.get("/users", function(req, res) {
-  var email = parseInt(req.query.email);
+  var email = req.query.email;
   db.collection(CONTACTS_COLLECTION).findOne({ email: email}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
