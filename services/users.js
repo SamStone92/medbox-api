@@ -11,6 +11,7 @@ var server = new Server('heroku_42v810c5', process.env.PORT || 8080, {auto_recon
 
 connectToServicesDB();
 connectToAreasDB();
+var CONTACTS_COLLECTION = "users";
 
 function connectToServicesDB(){
     db = new Db('services', server);
