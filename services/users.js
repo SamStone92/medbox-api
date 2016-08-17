@@ -1,27 +1,29 @@
 
+var express = require("express");
+var path = require("path");
+var mongodb = require("mongodb");
 
-var mongo = require('mongodb');
+var CONTACTS_COLLECTION = "contacts";
 
+var db;
 
-var Server = mongo.Server;
-var Db = mongo.Db;
-var BSON = mongo.BSONPure;
+// Connect to the database before starting the application server.
+mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  }
 
-var server = new Server('heroku_42v810c5', process.env.PORT || 8080, {auto_reconnect: true});
+  // Save database object from the callback for reuse.
+  db = database;
+  console.log("Database connection ready");
 
-connectToServicesDB();
-var CONTACTS_COLLECTION = "users";
-
-function connectToServicesDB(){
-    db = new Db('users', server);
-    db.open(function(err, db) {
-        if(!err) {
-            console.log("Connected to 'winedb' database");
-        }
-    });
-}
-
-
+  // Initialize the app.
+  var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
+});
 
 
 exports.getUser = function(req, res) {
