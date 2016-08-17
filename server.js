@@ -3,7 +3,6 @@ var path = require("path");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
-var users = require('./services/users');
 
 var CONTACTS_COLLECTION = "users";
 
@@ -56,19 +55,37 @@ app.post("/users", function(req, res) {
     });
 });
 
-// app.get("/users", function(req, res) {
-//   var email = req.query.email;
-//   db.collection(CONTACTS_COLLECTION).findOne({ email: email}, function(err, doc) {
-//     if (err) {
-//       handleError(res, err.message, "Failed to get contact");
-//     } else {
-//       res.status(200).json(doc);
-//     }
-//   });
-// });
+app.get("/users", function(req, res) {
+  var email = req.query.email;
+  db.collection(CONTACTS_COLLECTION).findOne({ email: email}, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
 
-app.get('/users', users.getUser);
+// exports.findAllInLocation = function(req, res) {
+// 	var lat = parseInt(req.query.lat);
+// 	var long = parseInt(req.query.long);
 
+//     areas.collection('areas', function(err, collection) {
+//         collection.find( { loc: { $geoWithin: { $centerSphere: [ [ lat, long ] ,
+//          100 / 3963.2 ] } } } ).toArray(function(err, items) {
+//             if(items.length == 0) {
+//                   res.status(501).send('not implemented');
+//             } else {
+//                 db.collection('services', function(err, collection) {
+//                     collection.find( { loc: { $geoWithin: { $centerSphere: [ [ lat, long ] ,
+//                      100 / 3963.2 ] } } } ).toArray(function(err, items) {
+//                         res.send(items);
+//                     });
+//                  });
+//             }
+//         });
+//      });
+// };
 
 app.put("/users/:id", function(req, res) {
   var updateDoc = req.body;
