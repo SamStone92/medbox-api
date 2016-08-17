@@ -7,11 +7,7 @@ var users = require('./services/users');
 
 var CONTACTS_COLLECTION = "users";
 
-var app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-// in latest body-parser use like below.
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
