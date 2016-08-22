@@ -39,7 +39,6 @@ function handleError(res, reason, message, code) {
 }
 
 app.post("/users", function(req, res) {
-  
   var serviceObject = req.body;
     console.log('Adding services: ' + JSON.stringify(serviceObject));
     db.collection('users', function(err, collection) {
@@ -56,6 +55,16 @@ app.post("/users", function(req, res) {
 });
 
 app.get("/users", function(req, res) {
+  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contacts.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/users:email", function(req, res) {
   var email = req.query.email;
   db.collection(CONTACTS_COLLECTION).findOne({ email: email}, function(err, doc) {
     if (err) {
