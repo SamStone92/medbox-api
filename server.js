@@ -81,7 +81,7 @@ app.put("/users/:id", function(req, res) {
 });
 
 app.delete("/users/:id", function(req, res) {
-  db.collection(USERS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete contact");
     } else {
@@ -96,7 +96,7 @@ app.post("/medication", function(req, res) {
   var newUser = req.body;
   newUser.createDate = new Date();
   
-  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+  db.collection(MED_COLLECTION).insertOne(newUser, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new contact.");
     } else {
@@ -106,7 +106,7 @@ app.post("/medication", function(req, res) {
 });
 
 app.get("/medication", function(req, res) {
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(MED_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
     } else {
@@ -116,7 +116,7 @@ app.get("/medication", function(req, res) {
 });
 
 app.get("/medication/:id", function(req, res) {
-  db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
+  db.collection(MED_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
@@ -128,7 +128,7 @@ app.get("/medication/:id", function(req, res) {
 app.put("/medication/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
-  db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(MED_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -138,7 +138,7 @@ app.put("/medication/:id", function(req, res) {
 });
 
 app.delete("/users/:id", function(req, res) {
-  db.collection(USERS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(MED_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete contact");
     } else {
