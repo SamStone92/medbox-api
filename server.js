@@ -126,7 +126,7 @@ app.get("/medicationForId/:id", function(req, res) {
 });
 
 app.get("/medicationForUser/:id", function(req, res) {
-  db.collection(MED_COLLECTION).find({ user: req.params.id }, function(err, doc) {
+  db.collection(MED_COLLECTION).find({ user: req.params.id }).toArray(function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
