@@ -4,29 +4,24 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
 
-var CONTACTS_COLLECTION = "users";
+var USERS_COLLECTION = "users";
+var MED_COLLECTION = "medication";
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-// in latest body-parser use like below.
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
-// Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
   }
 
-  // Save database object from the callback for reuse.
   db = database;
   console.log("Database connection ready");
 
-  // Initialize the app.
   var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
@@ -38,11 +33,13 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
+/*  THE PART FOR USERS */
+
 app.post("/users", function(req, res) {
   var newUser = req.body;
   newUser.createDate = new Date();
   
-  db.collection(CONTACTS_COLLECTION).insertOne(newUser, function(err, doc) {
+  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new contact.");
     } else {
@@ -52,7 +49,7 @@ app.post("/users", function(req, res) {
 });
 
 app.get("/users", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
     } else {
@@ -62,7 +59,7 @@ app.get("/users", function(req, res) {
 });
 
 app.get("/users/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
+  db.collection(USERS_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
@@ -71,33 +68,10 @@ app.get("/users/:id", function(req, res) {
   });
 });
 
-
-// exports.findAllInLocation = function(req, res) {
-// 	var lat = parseInt(req.query.lat);
-// 	var long = parseInt(req.query.long);
-
-//     areas.collection('areas', function(err, collection) {
-//         collection.find( { loc: { $geoWithin: { $centerSphere: [ [ lat, long ] ,
-//          100 / 3963.2 ] } } } ).toArray(function(err, items) {
-//             if(items.length == 0) {
-//                   res.status(501).send('not implemented');
-//             } else {
-//                 db.collection('services', function(err, collection) {
-//                     collection.find( { loc: { $geoWithin: { $centerSphere: [ [ lat, long ] ,
-//                      100 / 3963.2 ] } } } ).toArray(function(err, items) {
-//                         res.send(items);
-//                     });
-//                  });
-//             }
-//         });
-//      });
-// };
-
 app.put("/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
-
-  db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -107,7 +81,64 @@ app.put("/users/:id", function(req, res) {
 });
 
 app.delete("/users/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(USERS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete contact");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
+/*  THE PART FOR MEDICATION */
+
+app.post("/medication", function(req, res) {
+  var newUser = req.body;
+  newUser.createDate = new Date();
+  
+  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new contact.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.get("/medication", function(req, res) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contacts.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/medication/:id", function(req, res) {
+  db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.put("/medication/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+  db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
+app.delete("/users/:id", function(req, res) {
+  db.collection(USERS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete contact");
     } else {
