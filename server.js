@@ -115,8 +115,18 @@ app.get("/medication", function(req, res) {
   });
 });
 
-app.get("/medication/:id", function(req, res) {
+app.get("/medicationForId/:id", function(req, res) {
   db.collection(MED_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.get("/medicationForUser/:id", function(req, res) {
+  db.collection(MED_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
