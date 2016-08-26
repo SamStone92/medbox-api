@@ -46,7 +46,7 @@ function cronJob(){
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      console.log(result);
+      console.log(doc);
     }
   });
 }
