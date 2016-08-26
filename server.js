@@ -36,7 +36,7 @@ function handleError(res, reason, message, code) {
 
 
  
-var j = schedule.scheduleJob('42 * * * *', function(){
+var j = schedule.scheduleJob('*/1 * * * *', function(){
   console.log('The answer to life, the universe, and everything!');
 });
 
