@@ -54,6 +54,8 @@ function cronJob(){
             } else {
                 for (i = 0; i < results.length; i++) { 
                   var med = results[i];
+                  delete med["_id"];
+
                   med.date = new Date();
                   med.taken = false;
 
