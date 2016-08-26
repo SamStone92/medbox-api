@@ -42,11 +42,13 @@ var j = schedule.scheduleJob('*/1 * * * *', function(){
 
 function cronJob(){
 
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, doc) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, results) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      console.log(doc);
+      for (i = 0; i < results.length; i++) { 
+        console.log('IM DRUNK');
+      }
     }
   });
 }
