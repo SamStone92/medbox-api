@@ -41,9 +41,10 @@ var j = schedule.scheduleJob('*/1 * * * *', function(){
 });
 
 function cronJob(){
-  db.collection(MED_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to delete contact");
+      handleError(res, err.message, "Failed to get contact");
     } else {
       console.log(result);
     }
