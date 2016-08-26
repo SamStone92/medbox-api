@@ -47,7 +47,16 @@ function cronJob(){
       handleError(res, err.message, "Failed to get contact");
     } else {
       for (i = 0; i < results.length; i++) { 
-        console.log('IM DRUNK');
+        console.log(results[i].email);
+        db.collection(MED_COLLECTION).find({user: results[i].email}).toArray(function(err, results) {
+           if (err) {
+              handleError(res, err.message, "Failed to get contact");
+            } else {
+                for (i = 0; i < results.length; i++) { 
+                  console.log('IM DRUNK');
+                }
+            }
+        });
       }
     }
   });
