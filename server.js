@@ -3,6 +3,7 @@ var path = require("path");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
+var schedule = require('node-schedule');
 
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
@@ -33,6 +34,11 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
+
+ 
+var j = schedule.scheduleJob('42 * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+});
 
 /*  THE PART FOR USERS */
 
