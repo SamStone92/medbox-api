@@ -37,7 +37,7 @@ function handleError(res, reason, message, code) {
 
 
  
-var j = schedule.scheduleJob('*/1 * * * *', function(){
+var j = schedule.scheduleJob('00 00  * * *', function(){
   cronJob();
 });
 
