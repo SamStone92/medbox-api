@@ -3,7 +3,6 @@ var path = require("path");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
-var a = require('agenda')
 
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
@@ -34,30 +33,6 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
-
-
-var mongoConnectionString = process.env.MONGODB_URI;
-
-var agenda = new Agenda({db: {address: mongoConnectionString}});
-
-// or override the default collection name:
-// var agenda = new Agenda({db: {address: mongoConnectionString, collection: "jobCollectionName"}});
-
-// or pass additional connection options:
-// var agenda = new Agenda({db: {address: mongoConnectionString, collection: "jobCollectionName", options: {server:{auto_reconnect:true}}}});
-
-// or pass in an existing mongodb-native MongoClient instance
-// var agenda = new Agenda({mongo: myMongoClient});
-
-agenda.define('delete old users', function(job, done) {
-  
-  console.log("lol")
-  });
-
-agenda.on('ready', function() {
-  agenda.every('10 seconds', 'delete old users');
-  agenda.start();
-});
 
 /*  THE PART FOR USERS */
 
