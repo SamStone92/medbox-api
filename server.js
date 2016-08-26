@@ -7,6 +7,7 @@ var schedule = require('node-schedule');
 
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
+var MED_TAKEN_COLLECTION = "medicationToTake";
 
 var app = express();
 app.use(bodyParser.json());
@@ -47,7 +48,6 @@ function cronJob(){
       handleError(res, err.message, "Failed to get contact");
     } else {
       for (i = 0; i < results.length; i++) { 
-        console.log(results[i].email);
         db.collection(MED_COLLECTION).find({user: results[i].email}).toArray(function(err, results) {
            if (err) {
               handleError(res, err.message, "Failed to get contact");
@@ -57,7 +57,7 @@ function cronJob(){
                   med.date = new Date();
                   med.taken = false;
 
-                  db.collection(MED_COLLECTION).insertOne(med, function(err, doc) {
+                  db.collection(MED_TAKEN_COLLECTION).insertOne(med, function(err, doc) {
                  });
 
                 }
