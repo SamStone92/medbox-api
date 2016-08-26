@@ -37,8 +37,18 @@ function handleError(res, reason, message, code) {
 
  
 var j = schedule.scheduleJob('*/1 * * * *', function(){
-  console.log('The answer to life, the universe, and everything!');
+  cronJob();
 });
+
+function cronJob(){
+  db.collection(MED_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete contact");
+    } else {
+      console.log(result);
+    }
+  });
+}
 
 /*  THE PART FOR USERS */
 
