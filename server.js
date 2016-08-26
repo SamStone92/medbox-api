@@ -53,7 +53,18 @@ function cronJob(){
               handleError(res, err.message, "Failed to get contact");
             } else {
                 for (i = 0; i < results.length; i++) { 
-                  console.log('IM DRUNK');
+                  var med = results[i];
+                  med.date = new Date();
+                  med.taken = false;
+
+                  db.collection(MED_COLLECTION).insertOne(med, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to create new contact.");
+                  } else {
+                    res.status(201).json(doc.ops[0]);
+                  }
+                 });
+
                 }
             }
         });
