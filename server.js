@@ -55,7 +55,7 @@ function cronJob(){
                 for (i = 0; i < results.length; i++) { 
                   var med = results[i];
                   delete med["_id"];
-                  var date = new Date();
+                  var date = new Date(Date.GMT());
                   date.setHours(0,0,0,0);
                   med.date = date.toISOString();
                   med.taken = false;
