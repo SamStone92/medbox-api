@@ -58,7 +58,7 @@ function cronJob(){
                   delete med["_id"];
                   var now = new time.Date();
 
-                  now.setTimezone("Europe/London");
+                  now.setTimezone("UTC");
                   med.date = now.toISOString();
                   med.taken = false;
 
