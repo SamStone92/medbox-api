@@ -174,7 +174,7 @@ app.get("/medicationForUser/:id", function(req, res) {
 
 app.get("/medicationForDate", function(req, res) {
   var email = req.query.email;
-  var date = req.query.date;
+  var date = Date.parse(req.query.date);
 
   db.collection(MED_COLLECTION).find({ user:email, date:date }).toArray(function(err, doc) {
     if (err) {
