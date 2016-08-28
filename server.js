@@ -55,9 +55,9 @@ function cronJob(){
                 for (i = 0; i < results.length; i++) { 
                   var med = results[i];
                   delete med["_id"];
-
-                  med.date = new Date();
-                  med.date.setHours(0,0,0,0);
+                  var date = new Date();
+                  date.setHours(0,0,0,0);
+                  med.date = date.toISOString();
                   med.taken = false;
 
                   db.collection(MED_TAKEN_COLLECTION).insertOne(med, function(err, doc) {
