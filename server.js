@@ -55,10 +55,10 @@ function cronJob(){
                 for (i = 0; i < results.length; i++) { 
                   var med = results[i];
                   delete med["_id"];
+                  process.env.TZ = 'Europe/Amsterdam';
                   var now = new Date();
-                  var utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-                  utc.setHours(0,0,0,0);
-                  med.date = utc.toISOString();
+                  now.setHours(0,0,0,0);
+                  med.date = now.toISOString();
                   med.taken = false;
 
                   db.collection(MED_TAKEN_COLLECTION).insertOne(med, function(err, doc) {
