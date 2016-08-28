@@ -57,6 +57,7 @@ function cronJob(){
                   delete med["_id"];
 
                   med.date = new Date();
+                  med.date.setHours(0,0,0,0);
                   med.taken = false;
 
                   db.collection(MED_TAKEN_COLLECTION).insertOne(med, function(err, doc) {
@@ -175,6 +176,7 @@ app.get("/medicationForUser/:id", function(req, res) {
 app.get("/medicationForDate", function(req, res) {
   var email = req.query.email;
   var date = Date.parse(req.query.date);
+  date.setHours(0,0,0,0);
 
   db.collection(MED_COLLECTION).find({ user:email, date:date }).toArray(function(err, doc) {
     if (err) {
