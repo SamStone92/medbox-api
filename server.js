@@ -4,6 +4,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
 var schedule = require('node-schedule');
+var time = require('time');
 
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
@@ -55,9 +56,9 @@ function cronJob(){
                 for (i = 0; i < results.length; i++) { 
                   var med = results[i];
                   delete med["_id"];
-                  process.env.TZ = 'Europe/London';
-                  var now = new Date();
-                  now.setHours(0,0,0,0);
+                  var now = new time.Date();
+
+                  now.setTimezone("Europe/London");
                   med.date = now.toISOString();
                   med.taken = false;
 
