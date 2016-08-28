@@ -172,6 +172,19 @@ app.get("/medicationForUser/:id", function(req, res) {
   });
 });
 
+app.get("/medicationForDate", function(req, res) {
+  var email = req.query.email;
+  var date = req.query.date;
+
+  db.collection(MED_COLLECTION).find({ user:email, date:date }).toArray(function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
 app.put("/medication/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
