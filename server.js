@@ -56,8 +56,8 @@ function cronJob(){
                   var med = results[i];
                   delete med["_id"];
                   var date = new Date();
-                  date.setUTCDate();
-                  // date.setHours(0,0,0,0);
+                  // date.setUTCDate();
+                  date.setHours(0,0,0,0);
                   med.date = date.toISOString();
                   med.taken = false;
 
