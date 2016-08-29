@@ -20,11 +20,19 @@ app.use(bodyParser.urlencoded());
 
 var db;
 
-passport.use(new FacebookTokenStrategy({
-    clientID: 1002975379818961,
-    clientSecret: "f7ee558cd10d02f00e548235fa2e85f1"
-  }, function(accessToken, refreshToken, profile, done) {
-      return done();
+
+passport.use('facebook-token', new FacebookTokenStrategy({
+    clientID        : "1002975379818961",
+    clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    var user = {
+        'email': profile.emails[0].value,
+        'name' : profile.name.givenName + ' ' + profile.name.familyName,
+        'id'   : profile.id,
+        'token': accessToken
+    }
+    return done(null, user);
   }
 ));
 
@@ -86,9 +94,18 @@ function cronJob(){
 
 /* Authentication for logging in */
 
-app.post('/auth/facebook/token', passport.authenticate('facebook-token'), function (req, res) {
-    res.send(req.user? 200 : 401);
-  }
+app.post('/auth/facebook/token', passport.authenticate(['facebook-token','other-strategies']), 
+        function (req, res) {
+
+            if (req.user){
+                //you're authenticated! return sensitive secret information here.
+                res.send(200);
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+
+        }
 );
 
 
