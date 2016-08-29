@@ -4,6 +4,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
 var schedule = require('node-schedule');
+var FacebookTokenStrategy = require('passport-facebook-token');
 
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
@@ -35,8 +36,16 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
+passport.use(new FacebookTokenStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET
+  }, function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({facebookId: profile.id}, function (error, user) {
+      return done(error, user);
+    });
+  }
+));
 
- 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
   cronJob();
 });
@@ -70,6 +79,16 @@ function cronJob(){
     }
   });
 }
+
+/* Authentication for logging in */
+
+app.post('/auth/facebook/token',
+  passport.authenticate('facebook-token'),
+  function (req, res) {
+    // do something with req.user
+    res.send(req.user? 200 : 401);
+  }
+);
 
 /*  THE PART FOR USERS */
 
