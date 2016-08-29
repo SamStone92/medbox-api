@@ -28,9 +28,20 @@ passport.use('facebook-token', new FacebookTokenStrategy({
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
   },
   function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function () {
-    return done(null, profile);
-  });
+    // console.log(profile);
+
+    var user = {
+        'email': profile.emails[0].value,
+        'name' : profile.name.givenName + ' ' + profile.name.familyName,
+        'id'   : profile.id,
+        'token': accessToken
+    }
+
+    // You can perform any necessary actions with your user at this point,
+    // e.g. internal verification against a users table,
+    // creating new user entries, etc.
+
+    return done(null, user);
   }
 ));
 
