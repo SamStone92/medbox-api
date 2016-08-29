@@ -24,17 +24,18 @@ var db;
 
 
 passport.use('facebook-token', new FacebookTokenStrategy({
-    clientID        : "1002975379818961",
+    clientID        : 1002975379818961,
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
   },
   function(accessToken, refreshToken, profile, done) {
-    var user = {
-        'email': profile.emails[0].value,
-        'name' : profile.name.givenName + ' ' + profile.name.familyName,
-        'id'   : profile.id,
-        'token': accessToken
-    }
-    return done(null, user);
+    // var user = {
+    //     'email': profile.emails[0].value,
+    //     'name' : profile.name.givenName + ' ' + profile.name.familyName,
+    //     'id'   : profile.id,
+    //     'token': accessToken
+    // }
+    // return done(null, user);
+    console.log('done');
   }
 ));
 
