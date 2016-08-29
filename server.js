@@ -4,7 +4,9 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
 var schedule = require('node-schedule');
-var passportRequire = require('passport-facebook');
+var passport = require('passport');
+
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var FacebookTokenStrategy = require('passport-facebook-token');
 
