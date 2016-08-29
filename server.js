@@ -341,4 +341,4 @@ app.delete("/users/:id", passport.authenticate(['facebook-token']),
                 res.send(401)
             }
         }
-});
+);
