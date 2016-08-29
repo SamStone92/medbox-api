@@ -24,9 +24,7 @@ passport.use(new FacebookTokenStrategy({
     clientID: 1002975379818961,
     clientSecret: "f7ee558cd10d02f00e548235fa2e85f1"
   }, function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({facebookId: profile.id}, function (error, user) {
-      return done(error, user);
-    });
+    console.log("lol done");
   }
 ));
 
