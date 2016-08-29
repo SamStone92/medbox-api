@@ -28,8 +28,9 @@ passport.use('facebook-token', new FacebookTokenStrategy({
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
   },
   function(accessToken, refreshToken, profile, done) {
-    var user = {}
-    return done(null, user);
+    process.nextTick(function () {
+    return done(null, profile);
+  });
   }
 ));
 
