@@ -141,7 +141,6 @@ app.post("/users", passport.authenticate(['facebook-token']),
 
 app.get("/users", passport.authenticate(['facebook-token']), 
         function (req, res) {
-
             if (req.user){
                 db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
                     if (err) {
@@ -160,64 +159,115 @@ app.get("/users", passport.authenticate(['facebook-token']),
   
 
 
-app.get("/users/:id", function(req, res) {
-  db.collection(USERS_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
+app.get("/users/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
 
-app.put("/users/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
-  db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to update contact");
-    } else {
-      res.status(204).end();
-    }
-  });
-});
+            if (req.user){
+                db.collection(USERS_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contact");
+                  } else {
+                    res.status(200).json(doc);
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
 
-app.delete("/users/:id", function(req, res) {
-  db.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
-    if (err) {
-      handleError(res, err.message, "Failed to delete contact");
-    } else {
-      res.status(204).end();
-    }
-  });
-});
+        }
+ 
+);
+
+app.put("/users/:id", function (req, res) {
+
+            if (req.user){
+                var updateDoc = req.body;
+                delete updateDoc._id;
+                db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to update contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+
+        }
+
+);
+
+app.delete("/users/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                db.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to delete contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+        }
+);
 
 /*  THE PART FOR MEDICATION */
 
-app.post("/medication", function(req, res) {
-  var newUser = req.body;
-  newUser.createDate = new Date();
-  
-  db.collection(MED_COLLECTION).insertOne(newUser, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
+app.post("/medication", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                var newUser = req.body;
+                newUser.createDate = new Date();
+                
+                db.collection(MED_COLLECTION).insertOne(newUser, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to create new contact.");
+                  } else {
+                    res.status(201).json(doc.ops[0]);
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+        }
+);
 
-app.get("/medication", function(req, res) {
-  db.collection(MED_COLLECTION).find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
+app.get("/medication", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                db.collection(MED_COLLECTION).find({}).toArray(function(err, docs) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contacts.");
+                  } else {
+                    res.status(200).json(docs);
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+        }
+);
 
-app.get("/medicationForId/:id", function(req, res) {
+app.get("/medicationForId/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+
+            if (req.user){
+                //you're authenticated! return sensitive secret information here.
+                res.send(200);
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+
+        }
   db.collection(MED_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
@@ -227,47 +277,72 @@ app.get("/medicationForId/:id", function(req, res) {
   });
 });
 
-app.get("/medicationForUser/:id", function(req, res) {
-  db.collection(MED_COLLECTION).find({ user: req.params.id }).toArray(function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
+app.get("/medicationForUser/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                db.collection(MED_COLLECTION).find({ user: req.params.id }).toArray(function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contact");
+                  } else {
+                    res.status(200).json(doc);
+                  }
+                });
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+        }
+);
 
-app.get("/medicationForDate", function(req, res) {
-  var email = req.query.email;
-  var date = req.query.date;
+app.get("/medicationForDate", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                var email = req.query.email;
+                var date = req.query.date;
 
-  db.collection(MED_TAKEN_COLLECTION).find({ user:email, date:date }).toArray(function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
+                db.collection(MED_TAKEN_COLLECTION).find({ user:email, date:date }).toArray(function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contact");
+                  } else {
+                    res.status(200).json(doc);
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+        }
+);
 
-app.put("/medication/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
-  db.collection(MED_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to update contact");
-    } else {
-      res.status(204).end();
-    }
-  });
-});
+app.put("/medication/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                var updateDoc = req.body;
+                delete updateDoc._id;
+                db.collection(MED_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to update contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+        }
+);
 
-app.delete("/users/:id", function(req, res) {
-  db.collection(MED_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
-    if (err) {
-      handleError(res, err.message, "Failed to delete contact");
-    } else {
-      res.status(204).end();
-    }
-  });
+app.delete("/users/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                db.collection(MED_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to delete contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+        }
 });
