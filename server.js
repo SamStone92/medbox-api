@@ -260,22 +260,18 @@ app.get("/medicationForId/:id", passport.authenticate(['facebook-token']),
         function (req, res) {
 
             if (req.user){
-                //you're authenticated! return sensitive secret information here.
-                res.send(200);
+                db.collection(MED_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contact");
+                  } else {
+                    res.status(200).json(doc);
+                  }
+                });
             } else {
-                // not authenticated. go away.
                 res.send(401)
             }
-
         }
-  db.collection(MED_COLLECTION).findOne({ _id: new ObjectID(req.params.id)}, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
+);
 
 app.get("/medicationForUser/:id", passport.authenticate(['facebook-token']), 
         function (req, res) {
