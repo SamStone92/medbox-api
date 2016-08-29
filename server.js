@@ -150,7 +150,6 @@ app.get("/users", passport.authenticate(['facebook-token']),
                       res.status(200).json(docs);
                     }
                   });
-                res.send(200);
             } else {
                 // not authenticated. go away.
                 res.send(401)
