@@ -17,6 +17,8 @@ var MED_TAKEN_COLLECTION = "medicationToTake";
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 var db;
 
