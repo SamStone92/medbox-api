@@ -8,6 +8,7 @@
         "express": "^4.13.3",
         "mongodb": "^2.1.6",
         "node-schedule": "^1.1.1",
-        "passport-facebook-token": "^3.3.0"
+        "passport-facebook-token": "^3.3.0",
+        "passport-facebook": "^2.1.1"
     }
 }

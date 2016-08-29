@@ -4,6 +4,8 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var bodyParser = require('body-parser')
 var schedule = require('node-schedule');
+var passport = require('passport-facebook');
+
 var FacebookTokenStrategy = require('passport-facebook-token');
 
 var USERS_COLLECTION = "users";
@@ -74,10 +76,7 @@ function cronJob(){
 
 /* Authentication for logging in */
 
-app.post('/auth/facebook/token',
-  passport.authenticate('facebook-token'),
-  function (req, res) {
-    // do something with req.user
+app.post('/auth/facebook/token', passport.authenticate('facebook-token'), function (req, res) {
     res.send(req.user? 200 : 401);
   }
 );
