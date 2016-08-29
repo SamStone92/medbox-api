@@ -101,7 +101,7 @@ function cronJob(){
 
 /* Authentication for logging in */
 
-app.post('/auth/facebook/token', passport.authenticate(['facebook-token','other-strategies']), 
+app.post('/auth/facebook/token', passport.authenticate(['facebook-token']), 
         function (req, res) {
 
             if (req.user){
@@ -119,18 +119,25 @@ app.post('/auth/facebook/token', passport.authenticate(['facebook-token','other-
 
 /*  THE PART FOR USERS */
 
-app.post("/users", function(req, res) {
-  var newUser = req.body;
-  newUser.createDate = new Date();
-  
-  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
+app.post("/users", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+
+            if (req.user){
+                var newUser = req.body;
+                newUser.createDate = new Date();
+                
+                db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to create new contact.");
+                  } else {
+                    res.status(201).json(doc.ops[0]);
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+        }
+);
 
 app.get("/users", function(req, res) {
   db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
