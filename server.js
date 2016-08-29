@@ -139,15 +139,27 @@ app.post("/users", passport.authenticate(['facebook-token']),
         }
 );
 
-app.get("/users", function(req, res) {
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
+app.get("/users", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+
+            if (req.user){
+                db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+                    if (err) {
+                      handleError(res, err.message, "Failed to get contacts.");
+                    } else {
+                      res.status(200).json(docs);
+                    }
+                  });
+                res.send(200);
+            } else {
+                // not authenticated. go away.
+                res.send(401)
+            }
+
+        }
+);
+  
+
 
 app.get("/users/:id", function(req, res) {
   db.collection(USERS_COLLECTION).findOne({ email: req.params.id }, function(err, doc) {
