@@ -190,12 +190,13 @@ app.get("/users/:id", passport.authenticate(['facebook-token']),
  
 );
 
-app.put("/users/:id", function (req, res) {
+app.put("/users/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
 
             if (req.user){
                 var updateDoc = req.body;
                 delete updateDoc._id;
-                db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+                db.collection(USERS_COLLECTION).updateOne({email: req.params.id }, updateDoc, function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to update contact");
                   } else {
