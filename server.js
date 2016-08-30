@@ -45,7 +45,8 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-var options = { };
+var options = {    "production"     : false,
+ };
 var apnConnection = new apn.Connection(options);
 
 var myDevice = new apn.Device("C744BA1B-950C-4653-8E91-9620AB89A2EB");
