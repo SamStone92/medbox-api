@@ -49,7 +49,7 @@ var options = {    "production"     : false
  };
 var apnConnection = new apn.Connection(options);
 
-var myDevice = new apn.Device("C744BA1B-950C-4653-8E91-9620AB89A2EB");
+var myDevice = new apn.Device("A22FD83B-FD66-44E6-B577-753AAB70F48F");
 var note = new apn.Notification();
 
 note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
