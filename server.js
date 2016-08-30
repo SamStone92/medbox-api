@@ -17,9 +17,8 @@ var MED_TAKEN_COLLECTION = "medicationToTake";
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-  app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 var db;
 
@@ -29,10 +28,7 @@ passport.use('facebook-token', new FacebookTokenStrategy({
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
   },
   function(accessToken, refreshToken, profile, done) {
-    
-    
     return done(null, profile);
-  
   }
 ));
 
@@ -45,8 +41,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-var options = {    "production"     : false
- };
+var options = {"production": false, "passphrase": "Blobsrule56"};
 var apnConnection = new apn.Connection(options);
 
 var myDevice = new apn.Device("A22FD83B-FD66-44E6-B577-753AAB70F48F");
@@ -54,7 +49,7 @@ var note = new apn.Notification();
 
 note.badge = 3;
 note.sound = "ping.aiff";
-note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
+note.alert = "You have a new message";
 note.payload = {'messageFrom': 'Caroline'};
 
 apnConnection.pushNotification(note, myDevice);
