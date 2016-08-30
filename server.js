@@ -45,7 +45,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-var options = {    "production"     : false,
+var options = {    "production"     : false
  };
 var apnConnection = new apn.Connection(options);
 
