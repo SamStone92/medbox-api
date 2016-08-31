@@ -29,6 +29,18 @@ db.once('open', function() {
   });
 });
 
+var userSchema = mongoose.Schema({
+    name: String,
+    createDate: String,
+    email: String,
+    fullName: String,
+    UUID: String
+});
+var User = mongoose.model('User', userSchema);
+
+var router = express.Router();              // get an instance of the express Router
+
+
 passport.use('facebook-token', new FacebookTokenStrategy({
     clientID        : 1002975379818961,
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
