@@ -128,7 +128,9 @@ app.post('/auth/facebook/token', passport.authenticate(['facebook-token']),
         }
 );
 
-
+router.get('/', function(req, res) {
+    res.json({ message: 'hooray! welcome to our api!' });   
+});
 
 /*  THE PART FOR USERS */
 
