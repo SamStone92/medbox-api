@@ -6,11 +6,10 @@ var bodyParser = require('body-parser')
 var schedule = require('node-schedule');
 var passport = require('passport');
 var apn = require('apn');
-
 var FacebookStrategy = require('passport-facebook').Strategy;
-
 var FacebookTokenStrategy = require('passport-facebook-token');
-
+var mongoose = require('mongoose');
+mongoose.connect('process.env.MONGODB_URI');
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
 var MED_TAKEN_COLLECTION = "medicationToTake";
@@ -22,7 +21,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var db;
-
 
 passport.use('facebook-token', new FacebookTokenStrategy({
     clientID        : 1002975379818961,
@@ -74,8 +72,6 @@ function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
-
-
 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
   cronJob();
