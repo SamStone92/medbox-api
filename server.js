@@ -9,7 +9,7 @@ var apn = require('apn');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var FacebookTokenStrategy = require('passport-facebook-token');
 var mongoose = require('mongoose');
-mongoose.connect('process.env.MONGODB_URI');
+mongoose.connect(process.env.MONGODB_URI);
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
 var MED_TAKEN_COLLECTION = "medicationToTake";
@@ -20,7 +20,14 @@ app.use(bodyParser.urlencoded());
 app.use(passport.initialize());
 app.use(passport.session());
 
-var db;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+   var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  });
+});
 
 passport.use('facebook-token', new FacebookTokenStrategy({
     clientID        : 1002975379818961,
@@ -53,20 +60,6 @@ note.payload = {'messageFrom': 'Caroline'};
 
 apnConnection.pushNotification(note, myDevice);
 
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  }
-
-  db = database;
-  console.log("Database connection ready");
-
-  var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log("App now running on port", port);
-  });
-});
 
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
