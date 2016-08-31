@@ -8,7 +8,7 @@ var passport = require('passport');
 var apn = require('apn');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var FacebookTokenStrategy = require('passport-facebook-token');
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),Schema = mongoose.Schema;
 mongoose.connect(process.env.MONGODB_URI);
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
@@ -29,16 +29,15 @@ db.once('open', function() {
   });
 });
 
-var userSchema = mongoose.Schema({
+
+var User = new Schema({
     name: String,
     createDate: String,
     email: String,
     fullName: String,
     UUID: String
 });
-var User = mongoose.model('User', userSchema);
 
-var router = express.Router();              // get an instance of the express Router
 
 
 passport.use('facebook-token', new FacebookTokenStrategy({
@@ -128,30 +127,7 @@ app.post('/auth/facebook/token', passport.authenticate(['facebook-token']),
         }
 );
 
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
-});
 
-app.use('/api', router);
-
-
-router.route('/bears')
-
-    // create a bear (accessed at POST http://localhost:8080/api/bears)
-    .post(function(req, res) {
-        
-        var bear = new User();      // create a new instance of the Bear model
-        bear.name = req.body.name;  // set the bears name (comes from the request)
-
-        // save the bear and check for errors
-        bear.save(function(err) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Bear created!' });
-        });
-        
-    });
 
 /*  THE PART FOR USERS */
 
@@ -159,18 +135,20 @@ app.post("/users", passport.authenticate(['facebook-token']),
         function (req, res) {
 
             if (req.user){
-                var newUser = req.body;
-                newUser.createDate = new Date();
+              var user = new User();
+              user.name = req.body.name;
+              var newUser = req.body;
+              newUser.createDate = new Date();
                 
-                db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
-                  if (err) {
-                    handleError(res, err.message, "Failed to create new contact.");
-                  } else {
-                    res.status(201).json(doc.ops[0]);
-                  }
-                });
+              db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+                if (err) {
+                  handleError(res, err.message, "Failed to create new contact.");
+                } else {
+                  res.status(201).json(doc.ops[0]);
+                 }
+              });
             } else {
-                res.send(401)
+              res.send(401)
             }
         }
 );
