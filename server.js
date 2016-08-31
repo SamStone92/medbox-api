@@ -29,17 +29,6 @@ db.once('open', function() {
   });
 });
 
-
-var User = new Schema({
-    name: String,
-    createDate: String,
-    email: String,
-    fullName: String,
-    UUID: String
-});
-
-
-
 passport.use('facebook-token', new FacebookTokenStrategy({
     clientID        : 1002975379818961,
     clientSecret    : "f7ee558cd10d02f00e548235fa2e85f1"
@@ -133,10 +122,7 @@ app.post('/auth/facebook/token', passport.authenticate(['facebook-token']),
 
 app.post("/users", passport.authenticate(['facebook-token']), 
         function (req, res) {
-
             if (req.user){
-              var user = new User();
-              user.name = req.body.name;
               var newUser = req.body;
               newUser.createDate = new Date();
                 
