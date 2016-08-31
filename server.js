@@ -13,6 +13,8 @@ mongoose.connect(process.env.MONGODB_URI);
 var USERS_COLLECTION = "users";
 var MED_COLLECTION = "medication";
 var MED_TAKEN_COLLECTION = "medicationToTake";
+var NOTIFICATION_SCHEDULE = "notificationSchedules";
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -124,13 +126,19 @@ app.post("/users", passport.authenticate(['facebook-token']),
         function (req, res) {
             if (req.user){
               var newUser = req.body;
+              var email = req.body.email;
               newUser.createDate = new Date();
-                
               db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
                 if (err) {
                   handleError(res, err.message, "Failed to create new contact.");
                 } else {
-                  res.status(201).json(doc.ops[0]);
+                  db.collection(NOTIFICATION_SCHEDULE).insertOne(newUser, function(err, doc) {
+                    if (err) {
+                      handleError(res, err.message, "Failed to create new contact.");
+                    } else {
+                      res.status(201).json(doc.ops[0]);
+                     }
+                  });
                  }
               });
             } else {
