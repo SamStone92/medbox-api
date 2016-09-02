@@ -132,13 +132,7 @@ app.post("/users", passport.authenticate(['facebook-token']),
                 if (err) {
                   handleError(res, err.message, "Failed to create new contact.");
                 } else {
-                  db.collection(NOTIFICATION_SCHEDULE).insertOne(newUser, function(err, doc) {
-                    if (err) {
-                      handleError(res, err.message, "Failed to create new contact.");
-                    } else {
-                      res.status(201).json(doc.ops[0]);
-                     }
-                  });
+                    res.status(201).json(doc.ops[0]);
                  }
               });
             } else {
