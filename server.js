@@ -203,7 +203,6 @@ app.put("/users/:id", passport.authenticate(['facebook-token']),
 
             if (req.user){
                 var updateDoc = req.body;
-                delete updateDoc._id;
                 db.collection(USERS_COLLECTION).updateOne({email: req.params.id }, updateDoc, function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to update contact");
@@ -380,3 +379,26 @@ app.get("/remindersForUser/:id", passport.authenticate(['facebook-token']),
             }
         }
 );
+
+app.put("/reminders/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+
+            if (req.user){
+                var schedule = req.body;
+                db.collection(USERS_COLLECTION).updateOne({email: req.params.id }, schedule, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to update contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+
+        }
+);
+
+
+
+
