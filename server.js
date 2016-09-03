@@ -385,7 +385,7 @@ app.put("/reminders/:id", passport.authenticate(['facebook-token']),
 
             if (req.user){
                 var schedule = req.body;
-                db.collection(USERS_COLLECTION).updateOne({email: req.params.id }, schedule, function(err, doc) {
+                db.collection(USERS_COLLECTION).updateOne({user: req.params.id }, schedule, function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to update contact");
                   } else {
