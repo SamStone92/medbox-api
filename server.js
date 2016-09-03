@@ -137,15 +137,8 @@ app.post("/users", passport.authenticate(['facebook-token']),
                 if (err) {
                   handleError(res, err.message, "Failed to create new contact.");
                 } else {
-                  notificationSchedule.user = email;
-                 db.collection(NOTIFICATION_SCHEDULE).insertOne(notificationSchedule, function(err, doc) {
-                   if (err) {
-                      handleError(res, err.message, "Failed to create new contact.");
-                    } else {
-                     res.status(201).json(doc.ops[0]);
-                   }
-                 });
-
+                    res.status(201).json(doc.ops[0]);
+                    addNotificationSchedule(newUser.email);
                  }
               });
             } else {
@@ -153,6 +146,17 @@ app.post("/users", passport.authenticate(['facebook-token']),
             }
         }
 );
+
+function addNotificationSchedule(email){
+   notificationSchedule.user = email;
+                 db.collection(NOTIFICATION_SCHEDULE).insertOne(notificationSchedule, function(err, doc) {
+                   if (err) {
+                      handleError(res, err.message, "Failed to create new contact.");
+                    } else {
+                     res.status(201);
+                   }
+                 });
+}
 
 app.get("/users", passport.authenticate(['facebook-token']), 
         function (req, res) {
