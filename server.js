@@ -368,13 +368,13 @@ app.delete("/users/:id", passport.authenticate(['facebook-token']),
 app.get("/remindersForUser/:id", passport.authenticate(['facebook-token']), 
         function (req, res) {
             if (req.user){
-                db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }).(function(err, doc) {
+                db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }), function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
                     res.status(200).json(doc);
                   }
-                });
+                };
             } else {
                 // not authenticated. go away.
                 res.send(401)
