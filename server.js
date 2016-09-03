@@ -15,7 +15,6 @@ var MED_COLLECTION = "medication";
 var MED_TAKEN_COLLECTION = "medicationToTake";
 var NOTIFICATION_SCHEDULE = "notificationSchedules";
 
-
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -102,6 +101,12 @@ function cronJob(){
   });
 }
 
+
+var notificationSchedule = { 
+            user: "",
+            reminders: ["2014-03-12T08:00:00+00:00", "2014-03-12T13:37:27+00:00","2014-03-12T13:37:27+00:00", "2014-03-12T13:37:27+00:00" ]
+        }; 
+
 /* Authentication for logging in */
 
 app.post('/auth/facebook/token', passport.authenticate(['facebook-token']), 
@@ -132,7 +137,14 @@ app.post("/users", passport.authenticate(['facebook-token']),
                 if (err) {
                   handleError(res, err.message, "Failed to create new contact.");
                 } else {
-                    res.status(201).json(doc.ops[0]);
+                 db.collection(NOTIFICATION_SCHEDULE).insertOne(notificationSchedule, function(err, doc) {
+                   if (err) {
+                      handleError(res, err.message, "Failed to create new contact.");
+                    } else {
+                     res.status(201).json(doc.ops[0]);
+                   }
+                 });
+
                  }
               });
             } else {
