@@ -368,7 +368,7 @@ app.delete("/users/:id", passport.authenticate(['facebook-token']),
 app.get("/remindersForUser/:id", passport.authenticate(['facebook-token']), 
         function (req, res) {
             if (req.user){
-                db.collection(NOTIFICATION_SCHEDULE).find({ user: req.params.id }).toArray(function(err, doc) {
+                db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }).toArray(function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
