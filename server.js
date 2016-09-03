@@ -137,6 +137,7 @@ app.post("/users", passport.authenticate(['facebook-token']),
                 if (err) {
                   handleError(res, err.message, "Failed to create new contact.");
                 } else {
+                  notificationSchedule.user = email;
                  db.collection(NOTIFICATION_SCHEDULE).insertOne(notificationSchedule, function(err, doc) {
                    if (err) {
                       handleError(res, err.message, "Failed to create new contact.");
