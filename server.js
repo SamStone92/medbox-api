@@ -366,6 +366,7 @@ app.delete("/users/:id", passport.authenticate(['facebook-token']),
 /*Notification schedule calls */
 
 app.get("/remindersForUser/:id", passport.authenticate(['facebook-token']), 
+     function (req, res) {
           if (req.user){
                 db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }, function(err, doc) {
                   if (err) {
