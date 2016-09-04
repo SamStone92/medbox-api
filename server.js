@@ -111,7 +111,7 @@ function notification_cron(){
                     handleError(res, err.message, "Failed to get contact");
                   } else {
 
-                      db.collection(MED_COLLECTION).find({user: results[i].email}).toArray(function(err, medication) {
+                      db.collection(MED_COLLECTION).find({user: users[i].email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
                           } else {
