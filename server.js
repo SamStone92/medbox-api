@@ -100,6 +100,7 @@ function moveMedication_cron(){
   });
 }
 var user_email;
+var user_schedule;
 function notification_cron(){
   db.collection(USERS_COLLECTION).find({}).toArray(function(err, users) {
     if (err) {
@@ -111,14 +112,14 @@ function notification_cron(){
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
-
+                      user_schedule = userSchedule;
                       db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
                           } else {
 
                             for (var i = userSchedule.reminders.length - 1; i >= userSchedule.reminders.length - 1; i++) {
-                             var date = new Date(userSchedule.reminders[i]);
+                             var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
 
                              var now = new Date().setSeconds(0);
@@ -131,7 +132,7 @@ function notification_cron(){
                                 }
                               }
                              } else {
-                              console.log(now + " - " + userSchedule.reminders[i]);
+                              console.log(now + " - " + user_schedule);
                              }
                             }
                           }
