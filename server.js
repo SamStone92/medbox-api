@@ -131,7 +131,7 @@ function notification_cron(){
                                 }
                               }
                              } else {
-                              console.log(now + " - " + date);
+                              console.log(now + " - " + userSchedule.reminders[i]);
                              }
                             }
                           }
