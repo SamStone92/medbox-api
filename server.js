@@ -130,6 +130,8 @@ function notification_cron(){
                                   apnConnection.pushNotification(note, myDevice);
                                 }
                               }
+                             } else {
+                              console.log(now + " - " + date);
                              }
                             }
                           }
