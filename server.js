@@ -99,19 +99,20 @@ function moveMedication_cron(){
     }
   });
 }
-
+var user_email;
 function notification_cron(){
   db.collection(USERS_COLLECTION).find({}).toArray(function(err, users) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
       for (i = 0; i < users.length; i++) { 
-        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: users[i].email }, function(err, userSchedule) {
+        user_email = users[i].email;
+        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: user_email }, function(err, userSchedule) {
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
 
-                      db.collection(MED_COLLECTION).find({user: users[i].email}).toArray(function(err, medication) {
+                      db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
                           } else {
