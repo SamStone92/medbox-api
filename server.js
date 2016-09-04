@@ -106,7 +106,7 @@ function notification_cron(){
       handleError(res, err.message, "Failed to get contact");
     } else {
       for (i = 0; i < users.length; i++) { 
-        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }, function(err, userSchedule) {
+        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: users[i].email }, function(err, userSchedule) {
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
