@@ -59,7 +59,6 @@ note.sound = "ping.aiff";
 note.alert = "You have a new message";
 note.payload = {'messageFrom': 'Caroline'};
 
-apnConnection.pushNotification(note, myDevice);
 
 
 function handleError(res, reason, message, code) {
@@ -68,11 +67,11 @@ function handleError(res, reason, message, code) {
 }
 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
-  cronJob();
+  moveMedication_cron();
+  notification_cron();
 });
 
-function cronJob(){
-
+function moveMedication_cron(){
   db.collection(USERS_COLLECTION).find({}).toArray(function(err, results) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
@@ -96,6 +95,49 @@ function cronJob(){
                 }
             }
         });
+      }
+    }
+  });
+}
+
+function notification_cron(){
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, users) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      for (i = 0; i < users.length; i++) { 
+        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: req.params.id }, function(err, userSchedule) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to get contact");
+                  } else {
+
+                      db.collection(MED_COLLECTION).find({user: results[i].email}).toArray(function(err, medication) {
+                         if (err) {
+                            handleError(res, err.message, "Failed to get contact");
+                          } else {
+
+                            for (var i = userSchedule.reminders.length - 1; i >= userSchedule.reminders.length - 1; i++) {
+                             var date = new Date(userSchedule.reminders[i]);
+                             date.setSeconds(0);
+
+                             var now = new Date().setSeconds(0);
+
+                             if (date == now){
+                              var index = i;
+                              for (var i = medication.length - 1; i >= results.length-1; i++) {
+                                if(index == results[i].time){
+                                  apnConnection.pushNotification(note, myDevice);
+                                }
+                              }
+                             }
+                            }
+                          }
+                      });
+
+                  }
+                });
+
+        
       }
     }
   });
