@@ -125,8 +125,7 @@ function notification_cron(){
                           } else {
 
                             for (var i = muserSchedule.reminders.length - 1; i >= muserSchedule.reminders.length - 1; i++) {
-                             var date = new Date();
-                             date = parseIsoDatetime(user_schedule.reminders[i]);
+                             var date = new Date("\""+user_schedule.reminders[i]+"\"");
                              date.setSeconds(0);
 
                              var now = new Date().setSeconds(0);
