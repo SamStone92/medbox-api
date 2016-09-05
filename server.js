@@ -129,6 +129,7 @@ function notification_cron(){
                             for (var i = user_schedule.reminders.length - 1; i >= user_schedule.reminders.length - 1; i++) {
                              var date = new Date(user_schedule.reminders[i]);
                              var now = new Date().setSeconds(0);
+                             console.log(date);
 
                              if (date == now){
                               var index = i;
