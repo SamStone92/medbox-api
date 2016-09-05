@@ -108,11 +108,11 @@ function notification_cron(){
     } else {
       for (i = 0; i < users.length; i++) { 
         user_email = users[i].email;
-        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: user_email }, function(err, userSchedule) {
+        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: user_email }, function(err, muserSchedule) {
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
-                      user_schedule = userSchedule;
+                      user_schedule = muserSchedule;
                       db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
