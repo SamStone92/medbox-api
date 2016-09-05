@@ -130,7 +130,7 @@ function notification_cron(){
                              date.setSeconds(0);
                              var now = new Date().setSeconds(0);
 
-                             if (date == now){
+                             if (date.getMinutes() == now.getMinutes()){
                               var index = i;
                               for (var i = medication.length - 1; i >= results.length-1; i++) {
                                 if(index == results[i].time){
