@@ -118,7 +118,8 @@ function notification_cron(){
                   if (err) {
                     handleError(res, err.message, "Failed to get contact");
                   } else {
-                      user_schedule = muserSchedule;
+                      var newObject = JSON.stringify(muserSchedule);
+                      user_schedule = JSON.parse(newObject);
                       console.log(muserSchedule + "test" + muserSchedule);
                       db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
