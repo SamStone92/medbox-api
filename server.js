@@ -119,6 +119,7 @@ function notification_cron(){
                     handleError(res, err.message, "Failed to get contact");
                   } else {
                       user_schedule = muserSchedule;
+                      console.log(user_schedule + "test" + muserSchedule);
                       db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
