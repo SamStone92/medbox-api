@@ -125,7 +125,7 @@ function notification_cron(){
                           } else {
 
                             for (var i = user_schedule.reminders.length - 1; i >= user_schedule.reminders.length - 1; i++) {
-                             var date = new Date(user_schedule.reminders[i]);
+                             var date = new Date("2014-03-12T12:00:00");
                           
                              var now = new Date().setSeconds(0);
 
