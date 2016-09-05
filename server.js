@@ -120,7 +120,6 @@ function notification_cron(){
                   } else {
                       var newObject = JSON.stringify(muserSchedule);
                       user_schedule = JSON.parse(newObject);
-                      console.log(user_schedule + "test" + user_schedule);
                       db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
                          if (err) {
                             handleError(res, err.message, "Failed to get contact");
@@ -130,7 +129,6 @@ function notification_cron(){
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
                              var now = new Date().setSeconds(0);
-                             console.log(date);
 
                              if (date == now){
                               var index = i;
@@ -140,6 +138,7 @@ function notification_cron(){
                                 }
                               }
                              } else {
+                              console.log(now + "-" +date);
                              }
                             }
                           }
