@@ -118,7 +118,7 @@ function notification_cron(){
                             handleError(res, err.message, "Failed to get contact");
                           } else {
 
-                            for (var i = userSchedule.reminders.length - 1; i >= userSchedule.reminders.length - 1; i++) {
+                            for (var i = muserSchedule.reminders.length - 1; i >= muserSchedule.reminders.length - 1; i++) {
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
 
