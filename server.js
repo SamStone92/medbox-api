@@ -107,6 +107,19 @@ function parseIsoDatetime(dtstr) {
 
 var user_email;
 var user_schedule;
+
+function boolean compareDates(date1, date2){
+  var seconds = date1.getSeconds() == date2.getSeconds();
+  console.log(date1.getSeconds() " + " date2.getSeconds());
+  var minutes = date1.getMinutes() == date2.getMinutes();
+    console.log(date1.getMinutes() " + " date2.getMinutes());
+
+  var hours = date1.getHours() == date2.getHours();
+    console.log(date1.getHours() " + " date2.getHours());
+
+  return seconds && minutes && hours;
+}
+
 function notification_cron(){
   db.collection(USERS_COLLECTION).find({}).toArray(function(err, users) {
     if (err) {
@@ -129,9 +142,10 @@ function notification_cron(){
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
                              var now = new Date();
+                             now.setSeconds(0);
                              
 
-                             if (now == date){
+                             if (compareDates(date, now)){
                               var index = i;
                               for (var i = medication.length - 1; i >= results.length-1; i++) {
                                 if(index == results[i].time){
@@ -139,7 +153,6 @@ function notification_cron(){
                                 }
                               }
                              } else {
-                              console.log(now.getTime() + "-" +date.getTime());
                              }
                             }
                           }
