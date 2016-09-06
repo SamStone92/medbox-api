@@ -138,7 +138,7 @@ function notification_cron(){
                             handleError(res, err.message, "Failed to get contact");
                           } else {
 
-                            for (var i = 0; i = user_schedule.reminders.length - 1; i++) {
+                            for (var i = 0; i <= user_schedule.reminders.length - 1; i++) {
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
                              var now = new Date();
@@ -147,7 +147,7 @@ function notification_cron(){
 
                              if (compareDates(date, now)){
                               var index = i;
-                              for (var i = 0; i = results.length-1; i++) {
+                              for (var i = 0; i <= results.length-1; i++) {
                                 if(index == results[i].time){
                                   apnConnection.pushNotification(note, myDevice);
                                 }
