@@ -149,6 +149,8 @@ function notification_cron(){
                               for (var i = 0; i <= medication.length-1; i++) {
                                 if(index == medication[i].time){
                                   apnConnection.pushNotification(note, myDevice);
+                                } else {
+                                  console.log(index + " + " + medication[i].time );
                                 }
                               }
 
