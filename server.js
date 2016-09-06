@@ -153,7 +153,6 @@ function notification_cron(){
                                 }
                               }
 
-                              for
                              } else {
                              }
                             }
