@@ -110,12 +110,9 @@ var user_schedule;
 
 function compareDates(date1, date2){
   var seconds = date1.getSeconds() == date2.getSeconds();
-  console.log("seconds: " + date1.getSeconds() + " + " +date2.getSeconds());
   var minutes = date1.getMinutes() == date2.getMinutes();
-    console.log("minutes: " + date1.getMinutes() + " + " + date2.getMinutes());
 
   var hours = date1.getHours() == date2.getHours();
-    console.log("hours: " +  date1.getHours() + " + " + date2.getHours());
     if(!seconds || !minutes || !hours){
         console.log(date1.toISOString() + " + " + date2.toISOString());
     }
