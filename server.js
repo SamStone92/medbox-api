@@ -129,9 +129,9 @@ function notification_cron(){
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
                              var now = new Date();
-                             var n = now.toISOString();
+                             
 
-                             if (n == date){
+                             if (now == date){
                               var index = i;
                               for (var i = medication.length - 1; i >= results.length-1; i++) {
                                 if(index == results[i].time){
@@ -139,7 +139,7 @@ function notification_cron(){
                                 }
                               }
                              } else {
-                              console.log(n.getTime() + "-" +date.getTime());
+                              console.log(now.getTime() + "-" +date.getTime());
                              }
                             }
                           }
