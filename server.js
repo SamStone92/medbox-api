@@ -146,7 +146,7 @@ function notification_cron(){
 
                              if (compareDates(date, now)){
                               var index = i;
-                              for (var i = 1; i <= medication.length; i++) {
+                              for (var i = 1; i <= medication.length-1; i++) {
                                 if(index == medication[i].time){
                                   apnConnection.pushNotification(note, myDevice);
                                 } else {
