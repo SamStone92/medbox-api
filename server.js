@@ -108,7 +108,7 @@ function parseIsoDatetime(dtstr) {
 var user_email;
 var user_schedule;
 
-function boolean compareDates(date1, date2){
+function compareDates(date1, date2){
   var seconds = date1.getSeconds() == date2.getSeconds();
   console.log(date1.getSeconds() " + " date2.getSeconds());
   var minutes = date1.getMinutes() == date2.getMinutes();
