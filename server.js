@@ -139,7 +139,7 @@ function notification_cron(){
                                 }
                               }
                              } else {
-                              console.log(n + "-" +date);
+                              console.log(n.getTime() + "-" +date.getTime());
                              }
                             }
                           }
