@@ -113,9 +113,7 @@ function compareDates(date1, date2){
   var minutes = date1.getMinutes() == date2.getMinutes();
 
   var hours = date1.getHours() == date2.getHours();
-    if(!seconds || !minutes || !hours){
-        console.log(date1.toISOString() + " + " + date2.toISOString());
-    }
+    
   return seconds && minutes && hours;
 }
 
