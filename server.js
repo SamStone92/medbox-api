@@ -142,7 +142,7 @@ function notification_cron(){
                              date.setSeconds(0);
                              var now = new Date();
                              now.setSeconds(0);
-                             console.log("length: " + user_schedule.reminders.length )
+                             console.log("length: " + user_schedule.reminders.length + " i: " +i)
 
                              if (compareDates(date, now)){
                               var index = i;
