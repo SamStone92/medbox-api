@@ -138,7 +138,6 @@ function notification_cron(){
                           } else {
 
                             for (var i = 1; i <= user_schedule.reminders.length ; i++) {
-                              for (x in user_schedule.reminders) {
                              var date = new Date(user_schedule.reminders[i]);
                              date.setSeconds(0);
                              var now = new Date();
@@ -159,7 +158,7 @@ function notification_cron(){
                              }
                             }
                           }
-                      };
+                      });
 
                   }
                 });
