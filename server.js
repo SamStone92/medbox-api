@@ -159,7 +159,7 @@ function notification_cron(){
                              }
                             }
                           }
-                      });
+                      };
 
                   }
                 });
