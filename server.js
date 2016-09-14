@@ -134,11 +134,7 @@ function notification_cron(){
             var userDate = new Date(userSchedule[reminder]);
 
             if(compareDates(now, userDate)){
-              console.log("got here");
-                if(checkIfMedicationForTime(reminder)){
-                  console.log("and here!")
-                   apnConnection.pushNotification(note, myDevice);
-                }
+              checkIfMedicationForTime(reminder)
             } else {
               console.log(now + " " + userDate);
             }
@@ -153,13 +149,10 @@ function checkIfMedicationForTime(userTime){
   db.collection(MED_COLLECTION).findOne({ time: userTime}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
-      return false;
     } else {
       console.log("this is what doc equals " + doc);
-      if(doc == null){
-        return false;
-      } else {
-        return true;
+      if(doc != null){
+        apnConnection.pushNotification(note, myDevice);
       }
     }
   });
