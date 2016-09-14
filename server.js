@@ -130,6 +130,8 @@ function notification_cron(){
             var userDate = new Date(reminder);
             if(compareDates(now, userDate)){
                apnConnection.pushNotification(note, myDevice);
+            } else {
+              console.log(now + userDate);
             }
           }
       }
