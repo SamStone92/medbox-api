@@ -134,7 +134,9 @@ function notification_cron(){
             var userDate = new Date(userSchedule[reminder]);
 
             if(compareDates(now, userDate)){
+              console.log("got here");
                 if(checkIfMedicationForTime(reminder)){
+                  console.log("and here!")
                    apnConnection.pushNotification(note, myDevice);
                 }
             } else {
