@@ -134,9 +134,9 @@ function notification_cron(){
             var userDate = new Date(userSchedule[reminder]);
 
             if(compareDates(now, userDate)){
-               apnConnection.pushNotification(note, myDevice);
-                             console.log("sent you fuck");
-
+                if(checkIfMedicationForTime(reminder)){
+                   apnConnection.pushNotification(note, myDevice);
+                }
             } else {
               console.log(now + " " + userDate);
             }
@@ -144,6 +144,24 @@ function notification_cron(){
       }
     }
   });
+}
+
+function checkIfMedicationForTime(userTime){
+
+  db.collection(MED_COLLECTION).findOne({ time: userTime}, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+      return false;
+    } else {
+      if(doc == null){
+        return false;
+      } else {
+        return true;
+      }
+    }
+  });
+            
+        
 }
 
 
