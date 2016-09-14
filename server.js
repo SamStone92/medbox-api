@@ -123,6 +123,8 @@ function notification_cron(){
       handleError(res, err.message, "Failed to get contact");
     } else {
       var schedule;
+              console.log(schedules);
+
       console.log("seached users");
       for (schedule in schedules) {
           var reminder;
