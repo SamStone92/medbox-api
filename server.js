@@ -118,50 +118,20 @@ function compareDates(date1, date2){
 }
 
 function notification_cron(){
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, users) {
+  db.collection(NOTIFICATION_SCHEDULE).find({}).toArray(function(err, schedules) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      for (i = 0; i < users.length; i++) { 
-        user_email = users[i].email;
-        db.collection(NOTIFICATION_SCHEDULE).findOne({ user: user_email }, function(err, muserSchedule) {
-                  if (err) {
-                    handleError(res, err.message, "Failed to get contact");
-                  } else {
-                      var newObject = JSON.stringify(muserSchedule);
-                      user_schedule = JSON.parse(newObject);
-                      db.collection(MED_COLLECTION).find({user: user_email}).toArray(function(err, medication) {
-                         if (err) {
-                            handleError(res, err.message, "Failed to get contact");
-                          } else {
-
-                            for (var i = 1; i <= user_schedule.reminders.length ; i++) {
-                             var date = new Date(user_schedule.reminders[i]);
-                             date.setSeconds(0);
-                             var now = new Date();
-                             now.setSeconds(0);
-                             console.log("length: " + user_schedule.reminders.length + " i: " +i)
-
-                             if (compareDates(date, now)){
-                              var index = i;
-                              for (var e = 0; e <= medication.length-1; e++) {
-                                if(index == medication[e].time){
-                                  apnConnection.pushNotification(note, myDevice);
-                                } else {
-                                  console.log(index + " + " + medication[e].time );
-                                }
-                              }
-
-                             } else {
-                             }
-                            }
-                          }
-                      });
-
-                  }
-                });
-
-        
+      var schedule;
+      for (schedule in schedules) {
+          var reminder;
+          for (reminder in schedule.reminders){
+            var now = new Date();
+            var userDate = new Date(reminder);
+            if(compareDates(now, userDate)){
+               apnConnection.pushNotification(note, myDevice);
+            }
+          }
       }
     }
   });
