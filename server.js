@@ -51,7 +51,7 @@ passport.deserializeUser(function(user, done) {
 var options = {"production": false, "passphrase": "Blobsrule56"};
 var apnConnection = new apn.Connection(options);
 
-var myDevice = new apn.Device("17dc6ec6da25d0e5e8d6bba606b5e57729eb12c4e152462558dfcb7a1913311e");
+var myDevice = new apn.Device("f71a6322e021a002b47d9dcb50a3b106c98e9da43d349f8a2f60cca8cf51e5d5");
 var note = new apn.Notification();
 
 note.badge = 3;
