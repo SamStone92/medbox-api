@@ -144,11 +144,11 @@ function notification_cron(){
 
                              if (compareDates(date, now)){
                               var index = i;
-                              for (var i = 0; i <= medication.length-1; i++) {
-                                if(index == medication[i].time){
+                              for (var e = 0; e <= medication.length-1; e++) {
+                                if(index == medication[e].time){
                                   apnConnection.pushNotification(note, myDevice);
                                 } else {
-                                  console.log(index + " + " + medication[i].time );
+                                  console.log(index + " + " + medication[e].time );
                                 }
                               }
 
