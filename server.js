@@ -126,7 +126,7 @@ function notification_cron(){
       console.log("seached users");
       for (schedule in schedules) {
           var reminder;
-        console.log("seached schedules");
+        console.log(schedule.reminders);
 
           for (reminder in schedule.reminders){
             var now = new Date();
