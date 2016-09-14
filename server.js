@@ -135,6 +135,8 @@ function notification_cron(){
 
             if(compareDates(now, userDate)){
                apnConnection.pushNotification(note, myDevice);
+                             console.log("sent you fuck");
+
             } else {
               console.log(now + " " + userDate);
             }
