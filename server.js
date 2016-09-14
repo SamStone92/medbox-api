@@ -155,6 +155,7 @@ function checkIfMedicationForTime(userTime){
       handleError(res, err.message, "Failed to get contact");
       return false;
     } else {
+      console.log("this is what doc equals " + doc);
       if(doc == null){
         return false;
       } else {
