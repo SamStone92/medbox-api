@@ -123,13 +123,18 @@ function notification_cron(){
       handleError(res, err.message, "Failed to get contact");
     } else {
       var schedule;
+      console.log("seached users");
       for (schedule in schedules) {
           var reminder;
+        console.log("seached schedules");
+
           for (reminder in schedule.reminders){
             var now = new Date();
             var userDate = new Date(reminder);
             if(compareDates(now, userDate)){
                apnConnection.pushNotification(note, myDevice);
+              console.log("did it");
+
             } else {
               console.log(now + userDate);
             }
