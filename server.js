@@ -136,7 +136,7 @@ function checkIfMedicationForTime(userTime, email){
               console.log(user);
 
             if(user != null){
-              console.log(UUID);
+              console.log(user.UUID);
               console.log("sned this motherfucker");
               var options = {"production": false, "passphrase": "Blobsrule56"};
               var apnConnection = new apn.Connection(options);
