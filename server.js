@@ -139,7 +139,7 @@ function notification_cron(){
 
 function checkIfMedicationForTime(userTime, email){
 
-  db.collection(MED_COLLECTION).findOne({ time: userTime, user : email}, function(err, doc) {
+  db.collection(MED_COLLECTION).findOne({ time: String(userTime), user : email}, function(err, doc) {
     console.log(email + " doc: " +userTime);
       if(doc != null){
         db.collection(USERS_COLLECTION).findOne({ user: email}, function(err, user) {
