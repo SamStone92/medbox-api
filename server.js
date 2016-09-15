@@ -127,7 +127,7 @@ function notification_cron(){
             var now = new Date();
             var userDate = new Date(userSchedule[reminder]);
             if(compareDates(now, userDate)){
-              checkIfMedicationForTime(reminder, schedules[schedule].email);
+              checkIfMedicationForTime(reminder, schedules[schedule].user);
             } else {
               console.log(now + " " + userDate);
             }
