@@ -51,15 +51,6 @@ passport.deserializeUser(function(user, done) {
 var options = {"production": false, "passphrase": "Blobsrule56"};
 var apnConnection = new apn.Connection(options);
 
-var myDevice = new apn.Device("f71a6322e021a002b47d9dcb50a3b106c98e9da43d349f8a2f60cca8cf51e5d5");
-var note = new apn.Notification();
-
-note.badge = 3;
-note.sound = "ping.aiff";
-note.alert = "You have a new message";
-note.payload = {'messageFrom': 'Caroline'};
-
-
 
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
@@ -147,7 +138,13 @@ function checkIfMedicationForTime(userTime, email){
 
             if(user != null){
               console.log("sned this motherfucker");
-              apnConnection.pushNotification(note, myDevice);
+              var myDevice = new apn.Device(user.UUID);
+              var note = new apn.Notification();
+
+              note.badge = 3;
+              note.sound = "ping.aiff";
+              note.alert = "You have a new message";
+              note.payload = {'messageFrom': 'Caroline'};
             }
           }
         );
