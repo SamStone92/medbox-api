@@ -147,10 +147,10 @@ function checkIfMedicationForTime(userTime, email){
               apnConnection.pushNotification(note, myDevice);
             }
           }
-        });
+        );
       }
     }
-  });
+  );
             
         
 }
