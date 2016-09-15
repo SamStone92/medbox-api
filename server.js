@@ -140,7 +140,7 @@ function checkIfMedicationForTime(userTime, email){
               console.log("sned this motherfucker");
               var options = {"production": false, "passphrase": "Blobsrule56"};
               var apnConnection = new apn.Connection(options);
-              var myDevice = new apn.Device(user.UUID);
+              var myDevice = new apn.Device("6637a79f18e688444be6c806edfe4ebd456f9b54f8732a00f3d075b7f191bb52");
               var note = new apn.Notification();
 
               note.badge = 3;
