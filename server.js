@@ -134,7 +134,7 @@ function notification_cron(){
           }
       }
     }
-  });
+  );
 }
 
 function checkIfMedicationForTime(userTime, email){
