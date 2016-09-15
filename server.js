@@ -142,7 +142,7 @@ function checkIfMedicationForTime(userTime, email){
   db.collection(MED_COLLECTION).findOne({ time: String(userTime), user : email}, function(err, doc) {
     console.log(email + " doc: " +userTime);
       if(doc != null){
-        db.collection(USERS_COLLECTION).findOne({ user: email}, function(err, user) {
+        db.collection(USERS_COLLECTION).findOne({ email: email}, function(err, user) {
               console.log(user);
 
             if(user != null){
