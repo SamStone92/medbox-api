@@ -48,8 +48,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-var options = {"production": false, "passphrase": "Blobsrule56"};
-var apnConnection = new apn.Connection(options);
+
 
 
 function handleError(res, reason, message, code) {
@@ -137,7 +136,10 @@ function checkIfMedicationForTime(userTime, email){
               console.log(user);
 
             if(user != null){
+              console.log(UUID);
               console.log("sned this motherfucker");
+              var options = {"production": false, "passphrase": "Blobsrule56"};
+              var apnConnection = new apn.Connection(options);
               var myDevice = new apn.Device(user.UUID);
               var note = new apn.Notification();
 
