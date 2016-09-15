@@ -119,22 +119,15 @@ function compareDates(date1, date2){
 
 function notification_cron(){
   db.collection(NOTIFICATION_SCHEDULE).find({}).toArray(function(err, schedules) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
       var schedule;
-
       for (schedule in schedules) {
         var reminder;
         var userSchedule = schedules[schedule].reminders
-
           for (reminder in userSchedule){
-
             var now = new Date();
             var userDate = new Date(userSchedule[reminder]);
-
             if(compareDates(now, userDate)){
-              checkIfMedicationForTime(reminder)
+              checkIfMedicationForTime(reminder, schedules[schedule].email);
             } else {
               console.log(now + " " + userDate);
             }
@@ -144,15 +137,17 @@ function notification_cron(){
   });
 }
 
-function checkIfMedicationForTime(userTime){
+function checkIfMedicationForTime(userTime, email){
 
-  db.collection(MED_COLLECTION).findOne({ time: userTime}, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get contact");
-    } else {
-      console.log("this is what doc equals " + doc);
+  db.collection(MED_COLLECTION).findOne({ time: userTime, user : email}, function(err, doc) {
       if(doc != null){
-        apnConnection.pushNotification(note, myDevice);
+        db.collection(USERS_COLLECTION).findOne({ user: email}, function(err, user) {
+            if(user != null){
+              console.log("sned this motherfucker");
+              apnConnection.pushNotification(note, myDevice);
+            }
+          }
+        });
       }
     }
   });
