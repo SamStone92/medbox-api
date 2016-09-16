@@ -143,10 +143,8 @@ function checkIfMedicationForTime(userTime, email){
               var myDevice = new apn.Device(user.UUID);
               var note = new apn.Notification();
 
-              note.badge = 3;
               note.sound = "ping.aiff";
-              note.alert = "You have a new message";
-              note.payload = {'messageFrom': 'Caroline'};
+              note.alert = "It's time to take your " + getDayType(userTime) + " medication."
 
               apnConnection.pushNotification(note, myDevice);
 
@@ -155,11 +153,27 @@ function checkIfMedicationForTime(userTime, email){
         );
       }
     }
-  );
-            
-        
+  );        
 }
 
+function getDayType(dayInt){
+  switch(dayInt){
+    case 1:
+      return "morning";
+      break;
+    case 2:
+      return "afternoon";
+      break;
+    case 3:
+      return "evening";
+      break;
+    case 4:
+      return "night";
+      break;
+    default:
+      return "";
+  }
+}
 
 var notificationSchedule = { 
             user: "",
