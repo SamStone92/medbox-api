@@ -147,6 +147,9 @@ function checkIfMedicationForTime(userTime, email){
               note.sound = "ping.aiff";
               note.alert = "You have a new message";
               note.payload = {'messageFrom': 'Caroline'};
+
+              apnConnection.pushNotification(note, myDevice);
+
             }
           }
         );
