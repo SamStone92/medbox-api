@@ -219,7 +219,7 @@ function addNotificationSchedule(email){
    notificationSchedule.user = email;
                  db.collection(NOTIFICATION_SCHEDULE).insertOne(notificationSchedule, function(err, doc) {
                    if (err) {
-                      handleError(res, err.message, "Failed to create new contact.");
+                      console.log("fucked it");
                     } else {
                    }
                  });
