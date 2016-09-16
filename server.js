@@ -47,10 +47,6 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-
-
-
-
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
@@ -147,7 +143,6 @@ function checkIfMedicationForTime(userTime, email){
               note.alert = "It's time to take your " + getDayType(userTime) + " medication."
 
               apnConnection.pushNotification(note, myDevice);
-
             }
           }
         );
@@ -226,7 +221,6 @@ function addNotificationSchedule(email){
                    if (err) {
                       handleError(res, err.message, "Failed to create new contact.");
                     } else {
-                     res.status(201);
                    }
                  });
 }
