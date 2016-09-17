@@ -53,7 +53,7 @@ function handleError(res, reason, message, code) {
 }
 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
-  moveMedication_cr.511Zon();
+  moveMedication_cron();
   notification_cron();
 });
 
