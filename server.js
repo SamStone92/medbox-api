@@ -53,7 +53,7 @@ function handleError(res, reason, message, code) {
 }
 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
-  moveMedication_cron();
+  moveMedication_cr.511Zon();
   notification_cron();
 });
 
@@ -172,7 +172,7 @@ function getDayType(dayInt){
 
 var notificationSchedule = { 
             user: "",
-            reminders: ["2014-03-12T08:00:00+00:00", "2014-03-12T13:37:27+00:00","2014-03-12T13:37:27+00:00", "2014-03-12T13:37:27+00:00" ]
+            reminders: ["2014-03-12T08:00:00.511Z", "2014-03-12T13:37:27.511Z","2014-03-12T13:37:27.511Z", "2014-03-12T13:37:27.511Z" ]
         }; 
 
 /* Authentication for logging in */
