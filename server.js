@@ -400,6 +400,24 @@ app.put("/medication/:id", passport.authenticate(['facebook-token']),
             if (req.user){
                 var updateDoc = req.body;
                 delete updateDoc._id;
+                db.collection(MED_TAKEN_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+                  if (err) {
+                    handleError(res, err.message, "Failed to update contact");
+                  } else {
+                    res.status(204).end();
+                  }
+                });
+            } else {
+                res.send(401)
+            }
+        }
+);
+
+app.put("/medication/:id", passport.authenticate(['facebook-token']), 
+        function (req, res) {
+            if (req.user){
+                var updateDoc = req.body;
+                delete updateDoc._id;
                 db.collection(MED_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
                   if (err) {
                     handleError(res, err.message, "Failed to update contact");
