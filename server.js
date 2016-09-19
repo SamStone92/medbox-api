@@ -397,7 +397,7 @@ app.get("/medicationForDate", passport.authenticate(['facebook-token']),
 
 
 app.put("/medication/:id", function(req, res) {
-  function (req, res) {
+ 
             if (req.user){
               var updateDoc = req.body;
               delete updateDoc._id;
@@ -414,8 +414,7 @@ app.put("/medication/:id", function(req, res) {
                 res.send(401)
             }
 
-        }
-});
+        });
 
 
 
