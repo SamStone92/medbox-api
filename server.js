@@ -73,7 +73,7 @@ function moveMedication_cron(){
                   var now = new Date();
                   now.setHours(0,0,0,0);
                   med.date = now.toISOString();
-                  med.taken = "0";
+                  med.taken = false;
 
                   db.collection(MED_TAKEN_COLLECTION).insertOne(med, function(err, doc) {
                  });
