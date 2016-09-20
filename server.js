@@ -53,8 +53,8 @@ function handleError(res, reason, message, code) {
 }
 
 var j = schedule.scheduleJob('*/1 * * * *', function(){
-  moveMedication_cron();
-  notification_cron();
+  // moveMedication_cron();
+  // notification_cron();
 });
 
 function moveMedication_cron(){
@@ -134,7 +134,7 @@ function checkIfMedicationForTime(userTime, email){
             if(user != null){
               console.log(user.UUID);
               console.log("sned this motherfucker");
-              var options = {"production": false, "passphrase": "Blobsrule56"};
+              // var options = {"production": false, "passphrase": "**"};
               var apnConnection = new apn.Connection(options);
               var myDevice = new apn.Device(user.UUID);
               var note = new apn.Notification();
