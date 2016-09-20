@@ -17,7 +17,6 @@ var NOTIFICATION_SCHEDULE = "notificationSchedules";
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
 app.use(passport.initialize());
 app.use(passport.session());
 
